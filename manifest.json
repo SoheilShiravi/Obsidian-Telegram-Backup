@@ -1,0 +1,10 @@
+{
+	"id": "telegram-backup",
+	"name": "Telegram Backup",
+	"version": "1.0.0",
+	"minAppVersion": "1.13.2",
+	"description": "Back up notes, folders and your whole vault to a Telegram channel or chat with your own bot. Type a trigger in a note to send it instantly.",
+	"author": "SoheilShiravi",
+	"authorUrl": "https://github.com/SoheilShiravi",
+	"isDesktopOnly": false
+}

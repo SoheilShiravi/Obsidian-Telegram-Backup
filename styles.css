@@ -1,0 +1,79 @@
+/* Telegram Backup: uses Obsidian CSS variables so themes can restyle everything. */
+
+.telegram-backup-status {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--size-2-2);
+	cursor: var(--cursor);
+}
+
+.telegram-backup-status-icon {
+	display: inline-flex;
+}
+
+.telegram-backup-status-icon svg {
+	width: var(--icon-xs);
+	height: var(--icon-xs);
+}
+
+.telegram-backup-status.is-busy .telegram-backup-status-icon {
+	color: var(--interactive-accent);
+	animation: telegram-backup-pulse 1.2s ease-in-out infinite;
+}
+
+.telegram-backup-status.is-error {
+	color: var(--text-error);
+}
+
+@keyframes telegram-backup-pulse {
+	50% {
+		opacity: 0.35;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.telegram-backup-status.is-busy .telegram-backup-status-icon {
+		animation: none;
+	}
+}
+
+.telegram-backup-progress {
+	display: flex;
+	align-items: center;
+	gap: var(--size-4-3);
+}
+
+.telegram-backup-progress-text {
+	flex: 1 1 auto;
+}
+
+.telegram-backup-progress-cancel {
+	flex: 0 0 auto;
+}
+
+.telegram-backup-history-modal .modal-content {
+	padding-top: var(--size-4-2);
+}
+
+.telegram-backup-history-item.is-failed .setting-item-name {
+	color: var(--text-error);
+}
+
+.telegram-backup-history-item .setting-item-name {
+	overflow-wrap: anywhere;
+}
+
+.telegram-backup-error {
+	color: var(--text-error);
+	margin-top: var(--size-2-1);
+}
+
+.telegram-backup-empty,
+.telegram-backup-muted,
+.telegram-backup-suggestion-note {
+	color: var(--text-muted);
+}
+
+.telegram-backup-suggestion-note {
+	font-size: var(--font-ui-smaller);
+}

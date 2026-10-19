@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build output (attached to GitHub releases, never committed)
+main.js
+*.js.map
+.test-build/
+
+# Plugin data when the repo lives inside a vault
+data.json
+
+# Editors and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

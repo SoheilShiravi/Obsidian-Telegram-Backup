@@ -21,7 +21,7 @@
 	"author": "SoheilShiravi",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/SoheilShiravi/obsidian-telegram-backup.git"
+		"url": "https://github.com/SoheilShiravi/Obsidian-Telegram-Backup.git"
 	},
 	"license": "MIT",
 	"devDependencies": {

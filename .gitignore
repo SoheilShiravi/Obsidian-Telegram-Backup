@@ -14,3 +14,6 @@ data.json
 .idea/
 .DS_Store
 Thumbs.db
+
+# docs
+docs/

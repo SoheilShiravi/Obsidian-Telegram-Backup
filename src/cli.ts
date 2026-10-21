@@ -1,7 +1,8 @@
-import { moment, normalizePath, type CliData, type CliFlags, type CliHandler } from 'obsidian';
+import { normalizePath, type CliData, type CliFlags, type CliHandler } from 'obsidian';
 import { describeError } from './actions';
 import type TelegramBackupPlugin from './main';
 import { formatBytes, plural } from './utils/format';
+import { formatDate } from './utils/time';
 
 /**
  * Handlers for the Obsidian command line interface, so backups can be started
@@ -88,7 +89,7 @@ function status(plugin: TelegramBackupPlugin): string {
 	const last = plugin.state.history.find((entry) => entry.ok && entry.kind !== 'test');
 	const lines = [
 		`Configured: ${configured ? 'yes' : 'no (set the bot token and chat ID in the plugin settings)'}`,
-		`Last backup: ${last ? `${moment(last.at).format('YYYY-MM-DD HH:mm')} (${last.label})` : 'never'}`,
+		`Last backup: ${last ? `${formatDate(last.at, 'YYYY-MM-DD HH:mm')} (${last.label})` : 'never'}`,
 		`Scheduled vault backup: ${plugin.settings.scheduledBackup ? `every ${plugin.settings.scheduledInterval} h` : 'off'}`,
 		`Automatic note backups: ${plugin.settings.autoBackupOnChange ? 'on' : 'off'}`,
 	];

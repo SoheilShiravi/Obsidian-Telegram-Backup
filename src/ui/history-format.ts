@@ -1,6 +1,6 @@
-import { moment } from 'obsidian';
 import type { BackupTrigger, DeliveryFormat, HistoryEntry, HistoryKind } from '../state';
 import { formatBytes, plural } from '../utils/format';
+import { formatDate } from '../utils/time';
 
 export const KIND_ICONS: Record<HistoryKind, string> = {
 	note: '📝',
@@ -25,7 +25,7 @@ const FORMAT_LABELS: Record<DeliveryFormat, string> = {
 
 /** One-line summary of a history entry, for example `2026-10-18 14:05 · file · 12 KB · manual`. */
 export function describeEntry(entry: HistoryEntry): string {
-	const parts = [moment(entry.at).format('YYYY-MM-DD HH:mm')];
+	const parts = [formatDate(entry.at, 'YYYY-MM-DD HH:mm')];
 	if (entry.format) parts.push(FORMAT_LABELS[entry.format]);
 	if (entry.parts !== undefined && entry.parts > 1) parts.push(plural(entry.parts, 'part'));
 	if (entry.files !== undefined) parts.push(plural(entry.files, 'file'));

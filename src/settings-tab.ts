@@ -1,4 +1,4 @@
-import { moment, Notice, PluginSettingTab, type App, type ButtonComponent, type Setting, type SettingDefinitionItem } from 'obsidian';
+import { Notice, PluginSettingTab, type App, type ButtonComponent, type Setting, type SettingDefinitionItem } from 'obsidian';
 import { describeError } from './actions';
 import { checkConnection, detectChats } from './backup/connection';
 import { DEFAULT_API_SERVER } from './constants';
@@ -18,6 +18,7 @@ import { ChatPickerModal } from './ui/chat-picker-modal';
 import { ConfirmModal } from './ui/confirm-modal';
 import { HistoryModal } from './ui/history-modal';
 import { plural } from './utils/format';
+import { fromNow } from './utils/time';
 
 const BOTFATHER_URL = 'https://t.me/BotFather';
 const BOTFATHER_NAME = '@BotFather';
@@ -387,8 +388,8 @@ export class TelegramBackupSettingTab extends PluginSettingTab {
 		const { state, settings } = this.plugin;
 		if (!state.lastScheduledAt) return 'Not run yet.';
 		const next = state.lastScheduledAt + Number(settings.scheduledInterval) * 60 * 60 * 1000;
-		const nextText = next <= Date.now() ? 'soon' : moment(next).fromNow();
-		return `Last run ${moment(state.lastScheduledAt).fromNow()}. Next run ${nextText}.`;
+		const nextText = next <= Date.now() ? 'soon' : fromNow(next);
+		return `Last run ${fromNow(state.lastScheduledAt)}. Next run ${nextText}.`;
 	}
 
 	private async check(setting: Setting, button: ButtonComponent): Promise<void> {

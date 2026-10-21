@@ -1,4 +1,4 @@
-import { getAllTags, moment, Platform, type TFile } from 'obsidian';
+import { getAllTags, Platform, type TFile } from 'obsidian';
 import { MAX_TEXT_MESSAGES, MESSAGE_CHUNK_LIMIT, MESSAGE_FILE_EXTENSIONS, TEXT_FILE_EXTENSIONS, UPLOAD_LIMIT_BYTES } from '../constants';
 import { UserError } from '../errors';
 import { chunkBlocks } from '../format/chunker';
@@ -14,6 +14,7 @@ import { messageLink } from '../telegram/links';
 import { formatBytes } from '../utils/format';
 import { hashBytes, hashString } from '../utils/hash';
 import { toHashtag } from '../utils/paths';
+import { formatDate } from '../utils/time';
 import { createEntry, entrySize, ZipArchive } from '../zip/zip-writer';
 import { readFileText, resolveAttachments } from './vault-files';
 
@@ -264,7 +265,7 @@ export class NoteBackup {
 				device: Platform.isMobile ? 'mobile' : 'desktop',
 			},
 			dates: { now: Date.now(), created: file.stat.ctime, modified: file.stat.mtime },
-			formatDate: (timestamp, format) => moment(timestamp).format(format),
+			formatDate,
 		});
 	}
 

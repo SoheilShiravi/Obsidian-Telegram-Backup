@@ -1,5 +1,6 @@
-import { moment, setIcon, setTooltip } from 'obsidian';
+import { setIcon, setTooltip } from 'obsidian';
 import type TelegramBackupPlugin from '../main';
+import { fromNow } from '../utils/time';
 import { HistoryModal } from './history-modal';
 
 /** Status bar item that shows when the last backup happened. Select it to open the history. */
@@ -54,7 +55,7 @@ export class StatusBarItem {
 			return;
 		}
 		const last = this.plugin.state.history.find((entry) => entry.ok && entry.kind !== 'test');
-		textEl.setText(last ? `Backed up ${moment(last.at).fromNow()}` : 'No backups yet');
+		textEl.setText(last ? `Backed up ${fromNow(last.at)}` : 'No backups yet');
 		setTooltip(el, 'Telegram Backup: select to open the backup history.');
 	}
 

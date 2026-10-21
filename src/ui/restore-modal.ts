@@ -1,7 +1,8 @@
-import { Modal, moment, Setting, SuggestModal, type App } from 'obsidian';
+import { Modal, Setting, SuggestModal, type App } from 'obsidian';
 import type { RestoreMode } from '../backup/restore';
 import type TelegramBackupPlugin from '../main';
 import type { HistoryEntry } from '../state';
+import { formatDate } from '../utils/time';
 import { describeEntry } from './history-format';
 
 /** Lets the user pick which backed-up version of a note to restore. */
@@ -22,7 +23,7 @@ export class VersionPickerModal extends SuggestModal<HistoryEntry> {
 
 	renderSuggestion(entry: HistoryEntry, el: HTMLElement): void {
 		el.addClass('telegram-backup-suggestion');
-		el.createDiv({ text: moment(entry.at).format('dddd, D MMMM YYYY, HH:mm') });
+		el.createDiv({ text: formatDate(entry.at, 'dddd, D MMMM YYYY, HH:mm') });
 		el.createDiv({ cls: 'telegram-backup-suggestion-note', text: describeEntry(entry) });
 	}
 
@@ -46,7 +47,7 @@ export class RestoreModal extends Modal {
 		const path = entry.path ?? '';
 		const exists = this.app.vault.getFileByPath(path) !== null;
 		this.setTitle('Restore from Telegram');
-		contentEl.createEl('p', { text: `Restore “${path}” from the backup made on ${moment(entry.at).format('YYYY-MM-DD HH:mm')}?` });
+		contentEl.createEl('p', { text: `Restore “${path}” from the backup made on ${formatDate(entry.at, 'YYYY-MM-DD HH:mm')}?` });
 		if (exists) {
 			contentEl.createEl('p', {
 				cls: 'telegram-backup-muted',

@@ -46,12 +46,12 @@ Back up your Obsidian notes to a Telegram channel (or group, or private chat) wi
 ### Beta versions with BRAT
 
 1. Install and enable the **BRAT** plugin from the community directory.
-2. Run the command **BRAT: Add a beta plugin for testing** and enter this repository's URL: `https://github.com/SoheilShiravi/obsidian-telegram-backup`.
+2. Run the command **BRAT: Add a beta plugin for testing** and enter this repository's URL: `https://github.com/SoheilShiravi/Obsidian-Telegram-Backup`.
 3. Enable **Telegram Backup** in **Settings → Community plugins**.
 
 ### Manual installation
 
-1. Download `main.js`, `manifest.json` and `styles.css` from the latest [release](https://github.com/SoheilShiravi/obsidian-telegram-backup/releases).
+1. Download `main.js`, `manifest.json` and `styles.css` from the latest [release](https://github.com/SoheilShiravi/Obsidian-Telegram-Backup/releases).
 2. Create the folder `<your vault>/.obsidian/plugins/telegram-backup/` and copy the three files into it. (The `.obsidian` folder is hidden on some systems.)
 3. Restart Obsidian, then enable **Telegram Backup** in **Settings → Community plugins**.
 
@@ -302,12 +302,13 @@ The plugin talks to the Telegram Bot API over HTTPS. If Telegram is blocked in y
 
 ## Privacy and security
 
-- **Network use**: the plugin connects only to the Telegram Bot API server in the settings (`https://api.telegram.org` by default). It sends data only when you start a backup or when you turn on automatic or scheduled backups.
+- **Network use**: the plugin connects only to the Telegram Bot API server in the settings (`https://api.telegram.org` by default), through two kinds of requests: Bot API calls (`/bot<token>/<method>`, to send, edit and check messages and files) and file downloads (`/file/bot<token>/<path>`, only when you restore or download a backup). It sends data only when you start a backup or when you turn on automatic or scheduled backups.
 - **What is sent**: the content of the notes and files you back up, embedded attachments, file names and paths, tags, and the vault name (in captions and archive names).
 - **No telemetry**: the plugin does not collect analytics and does not contact any other server.
 - **Telegram is not end-to-end encrypted for bots**: messages in channels, groups and bot chats are stored on Telegram's servers, and Telegram can technically access them. Do not back up anything you would not store in a regular cloud service, and use **Excluded folders** and **Excluded tags** for sensitive notes.
 - **Bot token**: stored in Obsidian's keychain (secret storage), on this device only. It is not written to the vault or to `data.json`, so it is not synced or committed to git with your vault. Obsidian encrypts secrets with your operating system's secret store; on systems without one (some Linux desktops), it shows a warning that secrets are stored without encryption.
 - **Local data**: the plugin's `data.json` (in `.obsidian/plugins/telegram-backup/`) keeps the settings and the backup history: note paths, times, message links and Telegram file IDs.
+- **Vault access**: vault, folder and changed-files backups list the files in your vault to decide what goes into the archive, and scheduled backups check file modification times to see whether anything changed. Files in **Excluded folders** and notes with **Excluded tags** are skipped. Single-note backups read only that note and the files it embeds.
 - **Files outside the vault**: the plugin reads and writes only files inside your vault. The configuration folder is read only if you turn on **Include the configuration folder**.
 
 ## Troubleshooting
@@ -372,10 +373,9 @@ src/
 ├── ui/                  Modals, status bar and progress notice
 └── utils/               Small helpers
 test/                    Unit tests (Node.js test runner)
-docs/                    Publishing guide and plugin development guide
 ```
 
-See [docs/PUBLISHING.md](docs/PUBLISHING.md) for how releases and the community directory submission work, and [docs/HOW-OBSIDIAN-PLUGINS-WORK.md](docs/HOW-OBSIDIAN-PLUGINS-WORK.md) for an explanation of how this plugin is built.
+Releases are built by GitHub Actions: `npm version patch` updates `manifest.json` and `versions.json` and creates the version tag, and pushing the tag publishes a release named after the version with `main.js`, `manifest.json` and `styles.css` attached.
 
 ## Credits
 

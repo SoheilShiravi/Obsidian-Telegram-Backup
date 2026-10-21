@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-telegram-backup",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Back up notes, folders and the whole vault to a Telegram channel or chat with your own bot.",
 	"main": "main.js",
 	"type": "module",

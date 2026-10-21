@@ -1,10 +1,11 @@
-import { moment, normalizePath, type TFile } from 'obsidian';
+import { normalizePath, type TFile } from 'obsidian';
 import { DOWNLOAD_FOLDER, DOWNLOAD_LIMIT_BYTES, TEXT_FILE_EXTENSIONS } from '../constants';
 import { UserError } from '../errors';
 import { decodeUtf8 } from '../format/text';
 import type TelegramBackupPlugin from '../main';
 import type { HistoryEntry } from '../state';
 import { baseName, extensionOf, parentFolder, sanitizeFileName } from '../utils/paths';
+import { formatDate } from '../utils/time';
 
 export type RestoreMode = 'replace' | 'copy';
 
@@ -80,7 +81,7 @@ export class RestoreService {
 
 	private copyPath(path: string, at: number): string {
 		const ext = extensionOf(path);
-		const name = `${baseName(path)} (backup ${moment(at).format('YYYY-MM-DD HHmm')})${ext ? `.${ext}` : ''}`;
+		const name = `${baseName(path)} (backup ${formatDate(at, 'YYYY-MM-DD HHmm')})${ext ? `.${ext}` : ''}`;
 		return joinPath(parentFolder(path), name);
 	}
 

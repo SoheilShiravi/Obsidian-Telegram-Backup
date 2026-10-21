@@ -1,4 +1,4 @@
-import { moment, TFile, TFolder, type TAbstractFile } from 'obsidian';
+import { TFile, TFolder, type TAbstractFile } from 'obsidian';
 import { MEGABYTE, NOTE_EXTENSIONS } from '../constants';
 import { UserError } from '../errors';
 import { escapeHtml } from '../format/html';
@@ -7,6 +7,7 @@ import type { BackupTrigger } from '../state';
 import { messageLink } from '../telegram/links';
 import { formatBytes, plural } from '../utils/format';
 import { sanitizeFileName } from '../utils/paths';
+import { formatDate, formatNow } from '../utils/time';
 import { buildArchives, type ArchivePart, type ArchiveSource, type ArchiveSummary } from '../zip/archive-builder';
 import { configFolderSources, createExclusionFilter, fileSource, filesInFolder } from './vault-files';
 
@@ -180,7 +181,7 @@ export class ArchiveBackup {
 	private describe(request: ArchiveRequest, baseline: number): ArchiveLabel {
 		const vaultName = this.plugin.app.vault.getName();
 		const vaultSlug = sanitizeFileName(vaultName);
-		const stamp = moment().format('YYYY-MM-DD_HHmm');
+		const stamp = formatNow('YYYY-MM-DD_HHmm');
 		switch (request.kind) {
 			case 'vault':
 				return {
@@ -190,7 +191,7 @@ export class ArchiveBackup {
 					baseName: `${vaultSlug}-${stamp}`,
 				};
 			case 'changes': {
-				const since = baseline > 0 ? moment(baseline).format('YYYY-MM-DD HH:mm') : '';
+				const since = baseline > 0 ? formatDate(baseline, 'YYYY-MM-DD HH:mm') : '';
 				return {
 					title: since ? `Changes since ${since}` : 'Changes (first backup, all files)',
 					headline: since
@@ -224,7 +225,7 @@ export class ArchiveBackup {
 		return [
 			label.headline,
 			`📦 ${multiPart ? `Part ${part.index} · ` : ''}${details}`,
-			`🕒 ${escapeHtml(moment().format('YYYY-MM-DD HH:mm'))}`,
+			`🕒 ${escapeHtml(formatNow('YYYY-MM-DD HH:mm'))}`,
 			label.hashtag,
 		].join('\n');
 	}
